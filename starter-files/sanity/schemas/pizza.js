@@ -6,7 +6,7 @@ export default {
   // visible title
   title: 'Pizzas',
   type: 'document',
-  icon: () => icon,
+  icon,
   fields: [
     {
       name: 'name',
