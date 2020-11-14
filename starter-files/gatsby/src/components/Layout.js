@@ -8,7 +8,7 @@ import Typography from '../styles/Typography';
 import stripes from '../assets/images/stripes.svg';
 
 const SiteBorderStyles = styled.div`
-  max-width: 1000px;
+  max-width: 2000px;
   margin: 12rem;
   margin-top: clamp(2rem, 10vw, 12rem);
   background: white url(${stripes});
