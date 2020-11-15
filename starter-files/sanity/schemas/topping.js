@@ -1,7 +1,7 @@
-import { FaPepperHot as icon } from 'react-icons/Fa';
+import { FaPepperHot as icon } from 'react-icons/fa';
 
 export default {
-  // computer name
+  // Computer Name
   name: 'topping',
   // visible title
   title: 'Toppings',
@@ -10,15 +10,14 @@ export default {
   fields: [
     {
       name: 'name',
-      title: 'topping Name',
+      title: 'Topping Name',
       type: 'string',
-      description: 'What is the name of the topping',
+      description: 'What is the name of the topping?',
     },
     {
-      name: 'vegitarian',
-      title: 'Vegitarian',
+      name: 'vegetarian',
+      title: 'Vegetarian',
       type: 'boolean',
-      description: 'Is this topping vegitarian',
       options: {
         layout: 'checkbox',
       },
@@ -27,10 +26,10 @@ export default {
   preview: {
     select: {
       name: 'name',
-      vegitarian: 'vegitarian',
+      vegetarian: 'vegetarian',
     },
-    prepare: ({ name, vegitarian }) => ({
-      title: `${name} ${vegitarian ? '🌱' : ''}`,
+    prepare: ({ name, vegetarian }) => ({
+      title: `${name} ${vegetarian ? '🌱' : ''}`,
     }),
   },
 };

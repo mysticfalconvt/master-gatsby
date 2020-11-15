@@ -56,7 +56,6 @@ export default function ToppingsFilter() {
         nodes {
           name
           id
-          vegitarian
         }
       }
       pizzas: allSanityPizza {
@@ -69,13 +68,11 @@ export default function ToppingsFilter() {
       }
     }
   `);
-  console.clear();
   //   console.log({ toppings, pizzas });
   // get a list of all pizzas and tehir toppings
 
   // count how many pizzas are in each topping
   const toppingsWithCounts = countPizzasInToppings(pizzas.nodes);
-  console.log(toppingsWithCounts);
   // loop over first list and display pizzas and their toppings
   return (
     <ToppingStyles>
@@ -85,7 +82,6 @@ export default function ToppingsFilter() {
           <span className="count">{topping.count}</span>
         </Link>
       ))}
-      <p>sakldj</p>
     </ToppingStyles>
   );
 }
