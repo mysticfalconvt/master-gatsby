@@ -1,8 +1,8 @@
-import { graphql, Link, useStaticQuery } from 'gatsby';
 import React from 'react';
+import { useStaticQuery, graphql, Link } from 'gatsby';
 import styled from 'styled-components';
 
-const ToppingStyles = styled.div`
+const ToppingsStyles = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -19,43 +19,52 @@ const ToppingStyles = styled.div`
       background: white;
       padding: 2px 5px;
     }
-    .active {
+    &[aria-current='page'] {
       background: var(--yellow);
     }
   }
 `;
 
 function countPizzasInToppings(pizzas) {
+  // Return the pizzas with counts
   const counts = pizzas
     .map((pizza) => pizza.toppings)
     .flat()
     .reduce((acc, topping) => {
-      // check if it is an existing topping
+      // check if this is an existing topping
       const existingTopping = acc[topping.id];
       if (existingTopping) {
-        // if it is increment
+        console.log('Existing Topping', existingTopping.name);
+        //  if it is, increment by 1
         existingTopping.count += 1;
       } else {
-        // otherwise create a new entry
-        acc[topping.id] = { id: topping.id, name: topping.name, count: 1 };
+        console.log('New Topping', topping.name);
+        // otherwise create a new entry in our acc and set it to one
+        acc[topping.id] = {
+          id: topping.id,
+          name: topping.name,
+          count: 1,
+        };
       }
       return acc;
-    });
-  // sort them based on
+    }, {});
+  // sort them based on their count
   const sortedToppings = Object.values(counts).sort(
     (a, b) => b.count - a.count
   );
   return sortedToppings;
 }
 
-export default function ToppingsFilter() {
-  // get a list of toppings
+export default function ToppingsFilter({ activeTopping }) {
+  // Get a list of all the toppings
+  // Get a list of all the Pizzas with their toppings
   const { toppings, pizzas } = useStaticQuery(graphql`
     query {
       toppings: allSanityTopping {
         nodes {
           name
           id
+          vegetarian
         }
       }
       pizzas: allSanityPizza {
@@ -68,20 +77,27 @@ export default function ToppingsFilter() {
       }
     }
   `);
-  //   console.log({ toppings, pizzas });
-  // get a list of all pizzas and tehir toppings
-
-  // count how many pizzas are in each topping
+  // Count how many pizzas are in each topping
   const toppingsWithCounts = countPizzasInToppings(pizzas.nodes);
-  // loop over first list and display pizzas and their toppings
+  console.log(toppingsWithCounts);
+  // Loop over the list of toppings and display the topping and the count of pizzas in that topping
+  // Link it up.. ...  . . .
   return (
-    <ToppingStyles>
+    <ToppingsStyles>
+      <Link to="/pizzas">
+        <span className="name">All</span>
+        <span className="count">{pizzas.nodes.length}</span>
+      </Link>
       {toppingsWithCounts.map((topping) => (
-        <Link to={`/topping/${topping.name}`} key={topping.id}>
+        <Link
+          to={`/topping/${topping.name}`}
+          key={topping.id}
+          // className={topping.name === activeTopping ? 'active' : ''}
+        >
           <span className="name">{topping.name}</span>
           <span className="count">{topping.count}</span>
         </Link>
       ))}
-    </ToppingStyles>
+    </ToppingsStyles>
   );
 }
