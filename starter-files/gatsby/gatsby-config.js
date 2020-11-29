@@ -7,8 +7,10 @@ export default {
     title: `Slicks Slices`,
     siteUrl: `https://gatsby.pizza`,
     description: 'The best Pizza',
+    twitter: '@RobBoskind',
   },
   plugins: [
+    'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
     {
       resolve: 'gatsby-source-sanity',
