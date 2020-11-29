@@ -51,12 +51,12 @@ export default function SlicemastersPage({ data, pageContext }) {
       <SlicemasterGrid>
         {slicemasters.map((person) => (
           <SlicemasterStyles>
-            <Link to={`/slicemaster/${person.name}`}>
+            <Link to={`/slicemaster/${person.slug.current}`}>
               <h2>
                 <span className="mark">{person.name}</span>
               </h2>
+              <Img fluid={person.image.asset.fluid} />
             </Link>
-            <Img fluid={person.image.asset.fluid} />
             <p className="description">{person.description}</p>
           </SlicemasterStyles>
         ))}
@@ -66,7 +66,7 @@ export default function SlicemastersPage({ data, pageContext }) {
 }
 
 export const query = graphql`
-  query($skip: Int = 0, $pageSize: Int) {
+  query($skip: Int = 0, $pageSize: Int = 2) {
     slicemasters: allSanityPerson(limit: $pageSize, skip: $skip) {
       totalCount
       nodes {
