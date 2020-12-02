@@ -5,6 +5,8 @@ import SEO from '../components/SEO';
 import useForm from '../utils/useForm';
 import calculatePizzaPrice from '../utils/calculatePizzaPrice';
 import formatMoney from '../utils/formatMoney';
+import OrderStyles from '../styles/OrderStyles';
+import MenuItemStyles from '../styles/MenuItemStyles';
 
 export default function OrdersPage({ data }) {
   const pizzas = data.pizzas.nodes;
@@ -15,7 +17,7 @@ export default function OrdersPage({ data }) {
   return (
     <>
       <SEO title="Order a pizza" />
-      <form>
+      <OrderStyles>
         <fieldset>
           <legend>Your Info</legend>
           <label htmlFor="name">Name</label>
@@ -35,10 +37,10 @@ export default function OrdersPage({ data }) {
             onChange={updateValue}
           />
         </fieldset>
-        <fieldset>
+        <fieldset className="menu">
           <legend>Menu</legend>
           {pizzas.map((pizza) => (
-            <div key={pizza.id}>
+            <MenuItemStyles key={pizza.id}>
               <Img
                 fluid={pizza.image.asset.fluid}
                 width="50"
@@ -55,13 +57,13 @@ export default function OrdersPage({ data }) {
                   </button>
                 ))}
               </div>
-            </div>
+            </MenuItemStyles>
           ))}
         </fieldset>
-        <fieldset>
+        <fieldset className="order">
           <legend>Order</legend>
         </fieldset>
-      </form>
+      </OrderStyles>
     </>
   );
 }
