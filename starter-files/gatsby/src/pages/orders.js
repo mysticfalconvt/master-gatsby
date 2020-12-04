@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import { graphql } from 'gatsby';
-import React from 'react';
 import Img from 'gatsby-image';
 import SEO from '../components/SEO';
 import useForm from '../utils/useForm';
@@ -11,20 +11,32 @@ import usePizza from '../utils/usePizza';
 import PizzaOrder from '../components/PizzaOrder';
 import calculateOrderTotal from '../utils/calculateOrderTotal';
 
-export default function OrdersPage({ data }) {
+export default function OrderPage({ data }) {
   const pizzas = data.pizzas.nodes;
   const { values, updateValue } = useForm({
     name: '',
     email: '',
   });
-  const { order, addToOrder, removeFromOrder } = usePizza({
+  const {
+    order,
+    addToOrder,
+    removeFromOrder,
+    error,
+    loading,
+    message,
+    submitOrder,
+  } = usePizza({
     pizzas,
-    inputs: values,
+    values,
   });
+
+  if (message) {
+    return <p>{message}</p>;
+  }
   return (
     <>
-      <SEO title="Order a pizza" />
-      <OrderStyles>
+      <SEO title="Order a Pizza!" />
+      <OrderStyles onSubmit={submitOrder}>
         <fieldset>
           <legend>Your Info</legend>
           <label htmlFor="name">Name</label>
@@ -49,9 +61,9 @@ export default function OrdersPage({ data }) {
           {pizzas.map((pizza) => (
             <MenuItemStyles key={pizza.id}>
               <Img
-                fluid={pizza.image.asset.fluid}
                 width="50"
                 height="50"
+                fluid={pizza.image.asset.fluid}
                 alt={pizza.name}
               />
               <div>
@@ -62,7 +74,12 @@ export default function OrdersPage({ data }) {
                   <button
                     type="button"
                     key={size}
-                    onClick={() => addToOrder({ id: pizza.id, size })}
+                    onClick={() =>
+                      addToOrder({
+                        id: pizza.id,
+                        size,
+                      })
+                    }
                   >
                     {size} {formatMoney(calculatePizzaPrice(pizza.price, size))}
                   </button>
@@ -81,9 +98,12 @@ export default function OrdersPage({ data }) {
         </fieldset>
         <fieldset>
           <h3>
-            Your total is {formatMoney(calculateOrderTotal(order, pizzas))}
+            Your Total is {formatMoney(calculateOrderTotal(order, pizzas))}
           </h3>
-          <button type="submit">Order Ahead</button>
+          <div>{error ? <p>Error: {error}</p> : ''}</div>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Placing Order...' : 'Order Ahead'}
+          </button>
         </fieldset>
       </OrderStyles>
     </>
