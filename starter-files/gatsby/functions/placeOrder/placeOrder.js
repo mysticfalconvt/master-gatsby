@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 
+console.log('asjkdhfaskljhfd');
 function generateOrderEmail({ order, total }) {
   return `<div>
     <h2>Your Recent Order for ${total}</h2>
