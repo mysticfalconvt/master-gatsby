@@ -12,8 +12,7 @@ export const ItemsGrid = styled.div`
   grid-template-columns: 1fr 1fr;
 `;
 
-// /single grid item
-
+// Single Grid Item (for home page)
 export const ItemStyles = styled.div`
   text-align: center;
   position: relative;
@@ -22,10 +21,13 @@ export const ItemStyles = styled.div`
     font-size: 0;
   }
   p {
-    transform: rotate(-2deg) translateY(-50%);
+    transform: rotate(-2deg) translateY(-140%);
     position: absolute;
     width: 100%;
     left: 0;
+  }
+  .mark {
+    display: inline;
   }
   @keyframes shine {
     from {
