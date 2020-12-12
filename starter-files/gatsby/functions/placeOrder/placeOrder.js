@@ -1,6 +1,5 @@
 const nodemailer = require('nodemailer');
 
-console.log('asjkdhfaskljhfd');
 function generateOrderEmail({ order, total }) {
   return `<div>
     <h2>Your Recent Order for ${total}</h2>
@@ -52,12 +51,10 @@ exports.handler = async (event, context) => {
       }),
     };
   }
-  console.log(body);
   // Validate the data coming in is correct
   const requiredFields = ['email', 'name', 'order'];
 
   for (const field of requiredFields) {
-    console.log(`Checking that ${field} is good`);
     if (!body[field]) {
       return {
         statusCode: 400,
